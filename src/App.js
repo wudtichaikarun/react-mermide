@@ -10,10 +10,10 @@ const arrayToChartFormat = list =>
     if (list[index + 1]) {
       return `${item}-->${list[index + 1]}`;
     }
-    return;
+    return null;
   });
 
-const filterUndefined = R.filter(item => item != void 0);
+const notNull = R.filter(item => item !== null);
 
 const joinWithSemicolon = R.join(";");
 
@@ -22,8 +22,8 @@ const tranfromArrayToMermaidChard = R.pipe(
   arrayToChartFormat,
   R.tap(data => console.log("arrayToChartFormat", data)),
   // 2
-  filterUndefined,
-  R.tap(data => console.log("filterUndefined", data)),
+  notNull,
+  R.tap(data => console.log("notNull", data)),
   // 3
   joinWithSemicolon,
   R.tap(data => console.log("joinWithSemicolon", data))
@@ -32,8 +32,10 @@ const tranfromArrayToMermaidChard = R.pipe(
 function App() {
   return (
     <div className="App">
-      <h1>react mermaid 2</h1>
-      <Mermaid chart={`graph LR; ${tranfromArrayToMermaidChard(arr)} `} />
+      <h1>React mermaid</h1>
+      <section>
+        <Mermaid chart={`graph LR; ${tranfromArrayToMermaidChard(arr)} `} />
+      </section>
     </div>
   );
 }
